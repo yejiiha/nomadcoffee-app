@@ -143,3 +143,21 @@ export const SEE_ME = gql`
     }
   }
 `;
+
+export const SEARCH_USERS = gql`
+  query searchUsers($keyword: String!) {
+    searchUsers(keyword: $keyword) {
+      id
+      username
+    }
+  }
+`;
+
+export const SEE_PROFILE = gql`
+  query seeProfile($username: String!) {
+    seeProfile(username: $username) {
+      ...UserFragment
+    }
+  }
+  ${USER_FRAGMENT}
+`;

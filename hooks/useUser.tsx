@@ -9,13 +9,13 @@ function useUser() {
   const { data } = useQuery<me>(SEE_ME, {
     skip: !hasToken,
   });
-  console.log(data);
 
   useEffect(() => {
     if (data?.me === null) {
       logUserOut();
     }
   }, [data]);
+
   return { data };
 }
 

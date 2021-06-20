@@ -1,6 +1,6 @@
 module.exports = {
   client: {
-    include: ["./**/*.{tsx,ts}"],
+    includes: ["./components/**/*.{tsx,ts}"],
     tagName: "gql",
     service: {
       name: "nomadcoffee-backend",

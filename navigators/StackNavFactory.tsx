@@ -19,7 +19,9 @@ export type StackNavFactoryParamList = {
   LoggedOutProfile: undefined;
   MyProfile: undefined;
   CoffeeShop: undefined;
-  Profile: undefined;
+  Profile: {
+    username: string;
+  };
 };
 
 function StackNavFactory({ screenName }: IStackNavFactory) {
@@ -54,7 +56,9 @@ function StackNavFactory({ screenName }: IStackNavFactory) {
         <Stack.Screen
           name="MyProfile"
           component={MyProfile}
-          options={{ headerTitle: `${data?.me?.username}` }}
+          options={{
+            headerTitle: `${data?.me?.username}`,
+          }}
         />
       )}
       <Stack.Screen name="CoffeeShop" component={CoffeeShop} />

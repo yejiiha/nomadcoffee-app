@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Image, useWindowDimensions } from "react-native";
+import React, { useState } from "react";
+import { useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import MapView, { Marker } from "react-native-maps";
 import { Container, Text, useTheme } from "../../styles/styles";
 
 interface ICoffeeShop {
@@ -39,6 +41,10 @@ const CategoryContainer = styled.View`
   border-radius: 10px;
 `;
 
+const MapContainer = styled.View`
+  margin-bottom: 10px;
+`;
+
 const Category = styled(Text)`
   padding: 10px 20px;
   font-weight: 600;
@@ -53,7 +59,7 @@ const UserContainer = styled.View`
   padding: 10px 10px 30px 10px;
 `;
 
-const Column = styled.View`
+const Column = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;
@@ -82,6 +88,29 @@ function CoffeeShops({
   const photo = photos[0]?.url;
   const theme = useTheme();
   const [star, setStar] = useState(false);
+  const navigation = useNavigation();
+
+  const LATITUDE = Number(latitude);
+  const LONGITUDE = Number(longitude);
+  const ASPECT_RATIO = width / height;
+  const LATITUDE_DELTA = 0.0922;
+  const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+  const [region, setRegion] = useState({
+    latitude: LATITUDE,
+    longitude: LONGITUDE,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
+  });
+
+  const [markers, setMarkers] = useState([
+    {
+      coordinate: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+      },
+    },
+  ]);
 
   return (
     <Container>
@@ -95,6 +124,18 @@ function CoffeeShops({
         </CategoryContainer>
       )}
 
+      {latitude && longitude ? (
+        <MapContainer>
+          <MapView
+            initialRegion={region}
+            zoomTapEnabled={false}
+            style={{ width, height: 300 }}
+          >
+            <Marker coordinate={markers[0].coordinate} />
+          </MapView>
+        </MapContainer>
+      ) : null}
+
       {photo?.length > 0 && (
         <Photo
           source={{ uri: photo }}
@@ -103,7 +144,7 @@ function CoffeeShops({
       )}
 
       <UserContainer>
-        <Column>
+        <Column onPress={() => navigation.navigate("Profile", { username })}>
           <Avatar source={{ uri: avatarUrl }} style={{ borderRadius: 15 }} />
           <Username>{username}</Username>
         </Column>

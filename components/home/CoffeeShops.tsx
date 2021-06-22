@@ -93,7 +93,7 @@ function CoffeeShops({
   const LATITUDE = Number(latitude);
   const LONGITUDE = Number(longitude);
   const ASPECT_RATIO = width / height;
-  const LATITUDE_DELTA = 0.0922;
+  const LATITUDE_DELTA = 0.002;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
   const [region, setRegion] = useState({

@@ -24,7 +24,7 @@ function Home() {
     return <CoffeeShops {...shops} />;
   };
 
-  const refresh = async () => {
+  const onRefresh = async () => {
     setRefreshing(true);
     await refetch();
     setRefreshing(false);
@@ -45,7 +45,7 @@ function Home() {
         keyExtractor={(shops) => "" + shops?.id}
         renderItem={renderShops}
         refreshing={refreshing}
-        onRefresh={refresh}
+        onRefresh={onRefresh}
         style={{ width: "100%" }}
         showsVerticalScrollIndicator={false}
       />

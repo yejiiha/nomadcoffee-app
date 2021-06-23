@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useWindowDimensions } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image, useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
-import { Container, Text, useTheme } from "../../styles/styles";
+import { Text, useTheme } from "../../styles/styles";
 
 interface ICoffeeShop {
   id: number;
@@ -29,10 +29,13 @@ interface ICoffeeShop {
   }[];
 }
 
+const Container = styled.View``;
+
 const ShopName = styled(Text)`
   font-size: 23px;
   margin-bottom: 10px;
   font-weight: 600;
+  text-align: center;
 `;
 
 const CategoryContainer = styled.View`
@@ -46,6 +49,7 @@ const MapContainer = styled.View`
 `;
 
 const Category = styled(Text)`
+  text-align: center;
   padding: 10px 20px;
   font-weight: 600;
 `;
@@ -89,6 +93,7 @@ function CoffeeShops({
   const theme = useTheme();
   const [star, setStar] = useState(false);
   const navigation = useNavigation();
+  const [imageHeight, setImageHeight] = useState(height - 400);
 
   const LATITUDE = Number(latitude);
   const LONGITUDE = Number(longitude);
@@ -112,6 +117,12 @@ function CoffeeShops({
     },
   ]);
 
+  useEffect(() => {
+    Image.getSize(photo, (width, height) => {
+      setImageHeight(height / 3);
+    });
+  }, [photo]);
+
   return (
     <Container>
       <ShopName>{name}</ShopName>
@@ -121,7 +132,7 @@ function CoffeeShops({
           {categories.map((c) => (
             <Category key={c.id}>{c?.name}</Category>
           ))}
-        </CategoryContainer>
+        </CategoryContainer>        
       )}
 
       {latitude && longitude ? (
@@ -139,7 +150,7 @@ function CoffeeShops({
       {photo?.length > 0 && (
         <Photo
           source={{ uri: photo }}
-          style={{ width, height, resizeMode: "cover" }}
+          style={{ width, height: imageHeight, resizeMode: "cover" }}
         />
       )}
 

@@ -38,26 +38,24 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          seeCoffeeShops: {
-            keyArgs: false,
-            merge(existing = [], incoming = []) {
-              console.log("ex: ", existing);
-              console.log("in: ", incoming);
-              console.log("✅merge: ", [...existing, ...incoming]);
-
-              return [...existing, ...incoming];
-            },
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        seeCoffeeShops: {
+          keyArgs: false,
+          merge(existing = [], incoming: any[]) {
+            return [...existing, ...incoming];
           },
         },
       },
     },
-  }),
+  },
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache,
 });
 
 export default client;

@@ -118,9 +118,11 @@ function CoffeeShops({
   ]);
 
   useEffect(() => {
-    Image.getSize(photo, (width, height) => {
-      setImageHeight(height / 3);
-    });
+    if (photo) {
+      Image.getSize(photo, (width, height) => {
+        setImageHeight(height / 3);
+      });
+    }
   }, [photo]);
 
   return (
@@ -132,7 +134,7 @@ function CoffeeShops({
           {categories.map((c) => (
             <Category key={c.id}>{c?.name}</Category>
           ))}
-        </CategoryContainer>        
+        </CategoryContainer>
       )}
 
       {latitude && longitude ? (

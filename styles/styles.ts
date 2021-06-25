@@ -42,3 +42,8 @@ export const Container = styled.View`
 export const Text = styled.Text`
   color: ${(props) => props.theme.theme.textColor};
 `;
+
+export const View = styled.View`
+  flex: 1;
+  background-color: ${(props) => props.theme.theme.bgColor};
+`;

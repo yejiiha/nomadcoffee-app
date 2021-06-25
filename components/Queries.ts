@@ -147,10 +147,10 @@ export const SEE_ME = gql`
 export const SEARCH_USERS = gql`
   query searchUsers($keyword: String!) {
     searchUsers(keyword: $keyword) {
-      id
-      username
+      ...UserFragment
     }
   }
+  ${USER_FRAGMENT}
 `;
 
 export const SEE_PROFILE = gql`
@@ -160,4 +160,22 @@ export const SEE_PROFILE = gql`
     }
   }
   ${USER_FRAGMENT}
+`;
+
+export const SEARCH_COFFEE_SHOPTS = gql`
+  query searchCoffeeShops($keyword: String!) {
+    searchCoffeeShops(keyword: $keyword) {
+      ...CoffeeShopFragment
+    }
+  }
+  ${COFFEESHOP_FRAGMENT}
+`;
+
+export const SEARCH_CATEGORIES = gql`
+  query searchCategories($keyword: String!) {
+    searchCategories(keyword: $keyword) {
+      id
+      name
+    }
+  }
 `;

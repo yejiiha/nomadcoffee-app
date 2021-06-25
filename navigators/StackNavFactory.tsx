@@ -1,13 +1,13 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../screens/Home";
-import Search from "../screens/Search";
 import Profile from "../screens/Profile";
 import CoffeeShop from "../screens/CoffeeShop";
 import LoggedOutProfile from "../screens/LoggedOutProfile";
 import MyProfile from "../screens/MyProfile";
 import { useTheme } from "../styles/styles";
 import useUser from "../hooks/useUser";
+import SearchNav from "./SearchNav";
 
 interface IStackNavFactory {
   screenName: string;
@@ -15,7 +15,7 @@ interface IStackNavFactory {
 
 export type StackNavFactoryParamList = {
   Home: undefined;
-  Search: undefined;
+  SearchNav: undefined;
   LoggedOutProfile: undefined;
   MyProfile: undefined;
   CoffeeShop: undefined;
@@ -47,7 +47,16 @@ function StackNavFactory({ screenName }: IStackNavFactory) {
         />
       )}
       {screenName === "Search" && (
-        <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen
+          name="SearchNav"
+          component={SearchNav}
+          options={{
+            headerStyle: {
+              backgroundColor: theme.theme.bgColor,
+              shadowOpacity: 0,
+            },
+          }}
+        />
       )}
       {screenName === "LoggedOutProfile" && (
         <Stack.Screen name="LoggedOutProfile" component={LoggedOutProfile} />

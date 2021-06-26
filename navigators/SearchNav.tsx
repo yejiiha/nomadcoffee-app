@@ -18,6 +18,7 @@ import {
 } from "../components/Queries";
 import { searchCoffeeShops } from "../src/__generated__/searchCoffeeShops";
 import { searchCategories } from "../src/__generated__/searchCategories";
+import { useLayoutEffect } from "react";
 
 export type SearchNavList = {
   SearchCoffeeShops: {
@@ -44,7 +45,8 @@ const SearchWrapper = styled.View`
 
 const SearchContainer = styled.View<InputProps>`
   flex-direction: row;
-  width: ${(props) => props.width / 1.3}px;
+  width: ${(props) =>
+    props.isPress ? props.width / 1.3 : props.width / 1.1}px;
   background-color: ${(props) => props.theme.theme.formColor};
   padding: 6px 10px;
   border-radius: 10px;
@@ -65,7 +67,7 @@ function SearchNav() {
   const SearchTab = createMaterialTopTabNavigator<SearchNavList>();
   const navigation = useNavigation();
   const { width } = useWindowDimensions();
-  const { register, setValue, handleSubmit, reset, control } = useForm();
+  const { register, setValue, handleSubmit, reset, watch } = useForm();
   const [isPress, setIsPress] = useState(false);
   console.log(isPress);
 
@@ -139,11 +141,7 @@ function SearchNav() {
         />
       </SearchContainer>
 
-      <CancelContainer onPress={() => reset({ keyword: "sd" })}>
-        <Text>Cancel</Text>
-      </CancelContainer>
-
-      {/* {isPress ? (
+      {isPress ? (
         <CancelContainer
           onPress={() => {
             reset({ keyword: "" });
@@ -152,15 +150,15 @@ function SearchNav() {
         >
           <Text>Cancel</Text>
         </CancelContainer>
-      ) : null} */}
+      ) : null}
     </SearchWrapper>
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: SearchBox,
     });
-  }, []);
+  }, [isPress, watch("keyword")]);
 
   useEffect(() => {
     register("keyword", {

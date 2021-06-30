@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useQuery } from "@apollo/client";
-import { FlatList } from "react-native";
+import { useQuery, useReactiveVar } from "@apollo/client";
+import { FlatList, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { SEE_COFFEE_SHOPS } from "../components/Queries";
 import {
   seeCoffeeShops,
@@ -8,9 +9,16 @@ import {
 } from "../src/__generated__/seeCoffeeShops";
 import ScreenLayout from "../components/ScreenLayout";
 import CoffeeShops from "../components/home/CoffeeShops";
+import { useEffect } from "react";
+import { isLoggedInVar } from "../apollo";
+import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../styles/styles";
 
 function Home() {
+  const navigation = useNavigation();
+  const theme = useTheme();
   const [refreshing, setRefreshing] = useState(false);
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   const { data, loading, refetch, fetchMore } = useQuery<
     seeCoffeeShops,
     seeCoffeeShopsVariables
@@ -29,6 +37,23 @@ function Home() {
     await refetch();
     setRefreshing(false);
   };
+
+  const addButton = () => (
+    <TouchableOpacity
+      style={{ marginRight: 12 }}
+      onPress={() => navigation.navigate("UploadNav")}
+    >
+      <Ionicons name="add-circle-outline" size={24} color="white" />
+    </TouchableOpacity>
+  );
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigation.setOptions({
+        headerRight: addButton,
+      });
+    }
+  }, []);
 
   return (
     <ScreenLayout loading={loading}>

@@ -11,6 +11,7 @@ export const lightTheme: DefaultTheme = {
     borderColor: "rgb(219, 219, 219)",
     darkGray: "#8e8e8e",
     lightGray: "#EFEFEF",
+    closeBtnColor: "rgba(38,38,38,0.6)",
   },
 };
 
@@ -23,6 +24,7 @@ export const darkTheme: DefaultTheme = {
     borderColor: "#525252",
     darkGray: "#8e8e8e",
     lightGray: "#EFEFEF",
+    closeBtnColor: "rgba(255,255,255,0.6)",
   },
 };
 

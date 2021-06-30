@@ -59,7 +59,11 @@ function StackNavFactory({ screenName }: IStackNavFactory) {
         />
       )}
       {screenName === "LoggedOutProfile" && (
-        <Stack.Screen name="LoggedOutProfile" component={LoggedOutProfile} />
+        <Stack.Screen
+          name="LoggedOutProfile"
+          component={LoggedOutProfile}
+          options={{ headerTitle: "Profile" }}
+        />
       )}
       {screenName === "MyProfile" && (
         <Stack.Screen

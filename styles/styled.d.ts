@@ -10,6 +10,7 @@ declare module "styled-components" {
       borderColor: string;
       darkGray: string;
       lightGray: string;
+      closeBtnColor: string;
     };
   }
 }

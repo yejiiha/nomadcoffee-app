@@ -43,6 +43,7 @@ function LoggedOutTabNav() {
           tabBarIcon: ({ focused, color }) => (
             <TabIcon iconName="person" color={color} focused={focused} />
           ),
+          title: "Profile",
         }}
       >
         {() => <StackNavFactory screenName="LoggedOutProfile" />}
